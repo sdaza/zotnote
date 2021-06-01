@@ -8,7 +8,7 @@
 - You only need to specify the collection id: https://www.zotero.org/groups/2406179/csic-echo/collections/M8N2VMAP. In this case: `M8N2VMAP`.
 - The headers of notes have to start with #, text with headers cannot include #. For instance: 
 
-```
+```md
 # Research question
 
 Estimates interaction effects between PGS of obesity and cohorts using HRS.
@@ -40,19 +40,18 @@ pip install git+https://github.com/sdaza/zotnote.git
 
 You can save the credentials in a `config.py` and import it (`import config`): 
 
-````
+```yaml
 library_id = "0000000"
 api_key = "key"
 library_type = "group"
-````
+```
 
 ## Example
 
-```
+```python
 import config
 import zotnote as zn
 zn.exportNotes(collection = "M8N2VMAP", library_id = config.library_id, 
     api_key = config.api_key, file = "mynotes.csv")
-
 ```
 
