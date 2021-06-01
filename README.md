@@ -8,7 +8,7 @@
 - You only need to specify the collection id: https://www.zotero.org/groups/2406179/csic-echo/collections/M8N2VMAP. In this case: `M8N2VMAP`.
 - The headers of notes have to start with #, text with headers cannot include #. For instance: 
 
-```md
+```markdown
 # Research question
 
 Estimates interaction effects between PGS of obesity and cohorts using HRS.
