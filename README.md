@@ -55,3 +55,4 @@ zn.exportNotes(collection = "M8N2VMAP", library_id = config.library_id,
     api_key = config.api_key, file = "mynotes.csv")
 ```
 
+[See also this notebook.](https://github.com/sdaza/zotnote/blob/main/zotero-notes.ipynb)
