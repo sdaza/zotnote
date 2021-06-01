@@ -6,7 +6,7 @@
 - When reviewing literature it's nice to have the notes linked to Zotero references, but we would also want to extract all the notes and compare then in more systematic way. That way, we can keep our notes in Zotero (what is nice because all of us can have access to or edit them), but also we can create an Excel to explore notes in a more systematic way (i.e., text analysis).
 - This small package extracts notes from a collection, and create a CSV file that can be easily read using Excel. 
 - You only need to specify the collection id: https://www.zotero.org/groups/2406179/csic-echo/collections/M8N2VMAP. In this case: `M8N2VMAP`.
-- The headers of notes have to start with #, text with headers cannot include #. For instance: 
+- The headers of notes have to start with #, text between headers cannot include #. For instance: 
 
 ```markdown
 # Research question
