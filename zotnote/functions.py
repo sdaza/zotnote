@@ -33,8 +33,8 @@ def extractNotes(notes, separator = "#"):
     return pandas.DataFrame.from_dict(ftx)
 
 
-def exportNotes(library_type = "group", collection = None, library_id = None, 
-    api_key = None, file = "notes.csv", separator = "#"):
+def exportNotes(library_type="group", collection=None, library_id=None, 
+    api_key=None, file="zotero-notes.csv", separator = "#"):
     '''Export notes to a CSV file'''
     zot = zotero.Zotero(library_id, library_type, api_key)
     notes = pandas.DataFrame(columns=["notes"])
