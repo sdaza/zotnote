@@ -34,7 +34,7 @@ def extractNotes(notes, separator = "#"):
 
 
 def exportNotes(library_type = "group", collection = None, library_id = None, 
-    api_key = None, file = "notes.csv"):
+    api_key = None, file = "notes.csv", separator = "#"):
     '''Export notes to a CSV file'''
     zot = zotero.Zotero(library_id, library_type, api_key)
     notes = pandas.DataFrame(columns=["notes"])
@@ -68,7 +68,7 @@ def exportNotes(library_type = "group", collection = None, library_id = None,
     
     res = citations.set_index("parent").join(notes.set_index("parent"))
     res["notes"] = [re.sub("<.*?>", "", str(x)) for x in res["notes"]]
-    notes = extractNotes(res["notes"])
+    notes = extractNotes(res["notes"], separator=separator)
 
     ref = citations.set_index("parent")
     ref["citation"] = [re.sub("\[|\]|\(|\)|'", "", str(x)) for x in ref["citation"]]
@@ -79,5 +79,5 @@ def exportNotes(library_type = "group", collection = None, library_id = None,
     ref = pandas.DataFrame(ref)
     
     return ref.merge(notes, left_on='parent', right_on='parent') \
-        .rename(columns = {"parent" : "id"}, inplace = False) \
+        .rename(columns = {"parent" : "id"}, inplace=False) \
         .to_csv(file, index=False)
