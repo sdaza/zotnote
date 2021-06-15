@@ -18,7 +18,7 @@ def extractNotes(notes, separator = "#"):
             else: 
                 dtx[v[0].lower().replace(" ", "_")] = ""
         rows_list.append(dtx)
-    return pd.DataFrame(rows_list)      
+    return pandas.DataFrame(rows_list)      
 
 
 def exportNotes(library_type="group", collection=None, library_id=None, 
