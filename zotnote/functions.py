@@ -4,18 +4,9 @@ import pandas
 import re
 
 
-def mergeDict(dict1, dict2):
-    ''' Merge dictionaries and keep values of common keys in list'''
-    dict3 = {**dict1, **dict2}
-    for key, value in dict3.items():
-        if key in dict1 and key in dict2:
-            dict3[key] = [value , dict1[key]]
-    return dict3
-
-
 def extractNotes(notes, separator = "#"):
     '''Extract notes using separator'''
-    ftx = {}
+    rows_list = []
     for k,txt in notes.items():
         tx = txt.split(separator)
         tx = list(filter(lambda x: x != "", tx))
@@ -26,11 +17,8 @@ def extractNotes(notes, separator = "#"):
                 dtx[v[0].lower().replace(" ", "_")] = v[1]
             else: 
                 dtx[v[0].lower().replace(" ", "_")] = ""
-        if (len(ftx) == 0):
-            ftx = dtx
-        else:
-            ftx = mergeDict(ftx, dtx)
-    return pandas.DataFrame.from_dict(ftx)
+            row_list.append(dtx)
+    return pd.DataFrame(rows_list)      
 
 
 def exportNotes(library_type="group", collection=None, library_id=None, 
