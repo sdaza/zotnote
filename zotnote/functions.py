@@ -17,7 +17,7 @@ def extractNotes(notes, separator = "#"):
                 dtx[v[0].lower().replace(" ", "_")] = v[1]
             else: 
                 dtx[v[0].lower().replace(" ", "_")] = ""
-            row_list.append(dtx)
+        rows_list.append(dtx)
     return pd.DataFrame(rows_list)      
 
 
