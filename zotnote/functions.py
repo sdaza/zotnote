@@ -14,9 +14,9 @@ def extractNotes(notes, separator = "#"):
         for t in tx:
             v = t.strip().split("\n", 1)
             if (len(v) > 1):
-                dtx[v[0].lower().replace(" ", "_")] = v[1]
+                dtx[v[0].strip().lower().replace(" ", "_")] = v[1].strip() 
             else: 
-                dtx[v[0].lower().replace(" ", "_")] = ""
+                dtx[v[0].strip().lower().replace(" ", "_")] = ""
         rows_list.append(dtx)
     return pandas.DataFrame(rows_list)      
 
@@ -25,8 +25,14 @@ def exportNotes(library_type="group", collection=None, library_id=None,
     api_key=None, file="zotero-notes.csv", separator = "#"):
     '''Export notes to a CSV file'''
     zot = zotero.Zotero(library_id, library_type, api_key)
-    notes = pandas.DataFrame(columns=["notes"])
-    items = zot.collection_items(collection)
+    
+    ac = zot.all_collections(collection)
+    items = [zot.collection_items(c['key']) for c in ac]
+    items = [x for x in items if x]
+    items = [val for sublist in items for val in sublist]
+    
+    notes = pandas.DataFrame(columns=["notes", "parent"])
+    
     for item in items:
         try:
             notes = notes.append(
@@ -35,7 +41,7 @@ def exportNotes(library_type="group", collection=None, library_id=None,
             )
         except:
             notes = notes.append({"notes": ""}, ignore_index=True)
-        notes = notes.loc[[len(x) > 0 for x in notes["notes"]]]
+        notes = notes.loc[[(len(x) > 0 and separator in x) for x in notes["notes"]]]
 
     citations = pandas.DataFrame(columns=["citation"])
     for parent in notes["parent"]:
@@ -66,6 +72,7 @@ def exportNotes(library_type="group", collection=None, library_id=None,
     ref["tags"] = [re.sub("'", "", str(x)) for x in ref["tags"]]
     ref = pandas.DataFrame(ref)
     
-    return ref.merge(notes, left_on='parent', right_on='parent') \
+    ref.merge(notes, left_on='parent', right_on='parent') \
         .rename(columns = {"parent" : "id"}, inplace=False) \
+        .drop_duplicates() \
         .to_csv(file, index=False)
